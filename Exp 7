@@ -1,0 +1,45 @@
+
+import cv2
+
+# Open the captured video
+cap = cv2.VideoCapture("video.mp4")
+
+if not cap.isOpened():
+    print("Error: Cannot open video!")
+else:
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    if fps <= 0:
+        fps = 30
+
+    print("Press 'q' to exit.")
+
+    while True:
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        # Slow motion
+        cv2.imshow("Slow Motion", frame)
+        if cv2.waitKey(max(1, int(2000 / fps))) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+
+    # Reopen video for fast motion
+    cap = cv2.VideoCapture("video.mp4")
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        # Fast motion: skip frames
+        cv2.imshow("Fast Motion", frame)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
