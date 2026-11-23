@@ -1,0 +1,21 @@
+import cv2
+import numpy as np
+
+# Read the image
+img = cv2.imread("image.jpg", 0)
+
+# Create kernel
+kernel = np.ones((5, 5), np.uint8)
+
+# Apply Opening operation
+opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
+
+# Display original image
+cv2.imshow("Original Image", img)
+
+# Display opening image
+cv2.imshow("Opening Image", opening)
+
+# Wait and close
+cv2.waitKey(0)
+cv2.destroyAllWindows()
